@@ -1,21 +1,21 @@
 # KawaiiBot
 
-**TODO: Add description**
+My own sugoi kawaii discord bot.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `kawaii_bot` to your list of dependencies in `mix.exs`:
+To use this bot:
+- Install Elixir
+- Make `dev.secret.exs` and edit it like below
 
 ```elixir
-def deps do
-  [
-    {:kawaii_bot, "~> 0.1.0"}
-  ]
-end
+import Mix.Config
+
+config :nostrum,
+  token: "YOUR TOKEN", # The token of your bot as a string
+  num_shards: :auto # The number of shards you want to run your bot under, or :auto.
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/kawaii_bot](https://hexdocs.pm/kawaii_bot).
-
+- Do `mix deps.get`
+- Do `mix run --no-halt` or `iex -S mix`
+- And you're ready to go!
