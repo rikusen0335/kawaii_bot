@@ -9,13 +9,24 @@ defmodule KawaiiBot do
   end
 
   def handle_event({:MESSAGE_CREATE, message, _ws_state}) do
-    if String.starts_with?(message.content, "https://discordapp.com/channels") do
-      split = String.split(message.content, "/")
-      embed = Utils.link_to_msg(Enum.at(split, 4), Enum.at(split, 5), Enum.at(split, 6))
-      IO.inspect(embed)
-      Api.create_message!(message, embed: embed)
-    else
-      Command.handle(message)
+    cond do
+      String.starts_with?(message.content, "https://discordapp.com/channels") ->
+        split = String.split(message.content, "/")
+        embed = Utils.link_to_msg(Enum.at(split, 4), Enum.at(split, 5), Enum.at(split, 6))
+        IO.inspect(embed)
+        Api.create_message!(message, embed: embed)
+
+      !Enum.empty?(message.embeds) ->
+        IO.inspect(message.embeds)
+        Utils.get_image_from_embed(message.embeds)
+        |> Enum.map(
+            fn image_url ->
+              Utils.save_image(image_url)
+              Api.create_message(message, file: "/tmp/kawaii_bot_image.png")
+          end)
+
+      true ->
+        Command.handle(message)
     end
   end
 

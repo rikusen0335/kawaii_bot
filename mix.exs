@@ -23,6 +23,7 @@ defmodule KawaiiBot.MixProject do
   defp deps do
     [
       {:nostrum, git: "https://github.com/Kraigie/nostrum.git"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 end

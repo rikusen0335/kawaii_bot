@@ -27,4 +27,15 @@ defmodule KawaiiBot.Utils do
       |> put_footer(guild.name, Guild.icon_url(guild))
       |> put_timestamp(message.timestamp)
   end
+
+  def get_image_from_embed(embeds) do
+    images = []
+    Enum.filter(embeds, fn embed -> embed.image != nil end)
+      |> Enum.map(fn embed -> [embed.image.url | images] end)
+  end
+
+  def save_image(url) do
+    %HTTPoison.Response{body: body} = HTTPoison.get!(url)
+    File.write!("/tmp/kawaii_bot_image.png", body)
+  end
 end
